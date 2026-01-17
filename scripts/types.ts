@@ -2,6 +2,7 @@ export enum VarLayer {
   Meta = 'meta',
   Derived = 'derived',
   UI = 'ui',
+  Option = 'option',
 }
 
 export type Config = {
@@ -9,7 +10,7 @@ export type Config = {
 
   desc: string;
 
-  type: 'number' | 'string' | 'boolean' | 'array' | 'object';
+  type: 'number' | 'string' | 'boolean' | 'array' | 'object' | 'function';
 
   defaultValue?: number | string | boolean | Array<any> | Record<string, any>;
 

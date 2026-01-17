@@ -83,4 +83,18 @@ export const config: Config[] = [
     defaultValue: false,
     layer: VarLayer.UI,
   },
+
+  // 操作
+  {
+    name: 'openSelectModal',
+    desc: '打开选择模态框',
+    type: 'function',
+    layer: VarLayer.Option,
+  },
+  {
+    name: 'closeSelectModal',
+    desc: '关闭选择模态框',
+    type: 'function',
+    layer: VarLayer.Option,
+  },
 ]

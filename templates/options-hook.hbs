@@ -10,11 +10,12 @@ export const {{hookName}} = ({{#if hasProps}}props: Props{{/if}}) => {
 {{#each vars}}
   /**
    * {{description}}
-   * TODO: Implement derived {{name}}
    */
-  const {{name}} = () => {{{defaultValue}}};
-{{/each}}
+  function {{name}}() {
+    // TODO: Implement {{name}}
+  }
 
+{{/each}}
   return {
 {{#each vars}}
     {{name}},

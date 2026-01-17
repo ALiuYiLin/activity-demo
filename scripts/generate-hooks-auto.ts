@@ -68,6 +68,17 @@ const generateAll = async () => {
 
   // 3. useUI (UI data)
   await generateHook('useUI', [VarLayer.UI], 'ui-hook.hbs');
+
+  // 4. useOptions (Option data)
+  await generateHook('useOptions', [VarLayer.Option], 'options-hook.hbs', {
+    hasProps: true,
+    imports: [
+      "import { UseBaseReturn } from './useBase'",
+      "import { UseDerivedReturn } from './useDerived'",
+      "import { UseUIReturn } from './useUI'"
+    ],
+    propsType: "UseBaseReturn & UseDerivedReturn & UseUIReturn"
+  });
 };
 
 generateAll().catch(console.error);
