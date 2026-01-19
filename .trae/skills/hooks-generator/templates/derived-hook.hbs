@@ -1,0 +1,28 @@
+{{#each imports}}
+{{{this}}};
+{{/each}}
+
+import { useMemo } from "react";
+
+
+{{#if hasProps}}
+type Props = {{{propsType}}};
+{{/if}}
+
+export const {{hookName}} = ({{#if hasProps}}props: Props{{/if}}) => {
+{{#each vars}}
+  /**
+   * {{description}}
+   * TODO: Implement derived {{name}}
+   */
+  const {{name}} = useMemo(() => {{{defaultValue}}},[]);
+{{/each}}
+
+  return {
+{{#each vars}}
+    {{name}},
+{{/each}}
+  }
+}
+
+export type {{capitalizedHookName}}Return = ReturnType<typeof {{hookName}}>

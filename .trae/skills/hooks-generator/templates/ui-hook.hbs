@@ -1,0 +1,19 @@
+import { useState } from "react";
+
+export const {{hookName}} = () => {
+{{#each vars}}
+  /**
+   * {{description}}
+   */
+  const [{{name}}, set{{capitalizedName}}] = useState<{{type}}>({{{defaultValue}}}); 
+{{/each}}
+
+  return {
+{{#each vars}}
+    {{name}},
+    set{{capitalizedName}},
+{{/each}}
+  }
+}
+
+export type {{capitalizedHookName}}Return = ReturnType<typeof {{hookName}}>

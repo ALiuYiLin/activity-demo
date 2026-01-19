@@ -1,0 +1,26 @@
+{{#each imports}}
+{{{this}}};
+{{/each}}
+
+{{#if hasProps}}
+type Props = {{{propsType}}};
+{{/if}}
+
+export const {{hookName}} = ({{#if hasProps}}props: Props{{/if}}) => {
+{{#each vars}}
+  /**
+   * {{description}}
+   */
+  function {{name}}() {
+    // TODO: Implement {{name}}
+  }
+
+{{/each}}
+  return {
+{{#each vars}}
+    {{name}},
+{{/each}}
+  }
+}
+
+export type {{capitalizedHookName}}Return = ReturnType<typeof {{hookName}}>

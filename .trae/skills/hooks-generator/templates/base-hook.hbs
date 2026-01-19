@@ -1,0 +1,25 @@
+import { useEffect, useState } from "react";
+
+export const {{hookName}} = () => {
+{{#each vars}}
+  /**
+   * {{description}}
+   */
+  const [{{name}}, set{{capitalizedName}}] = useState<{{type}}>({{{defaultValue}}}); 
+{{/each}}
+
+  useEffect(()=>{
+    async function init(){
+      // TODO: Implement init logic
+    }
+    init()
+  },[])
+
+  return {
+{{#each vars}}
+    {{name}},
+{{/each}}
+  }
+}
+
+export type {{capitalizedHookName}}Return = ReturnType<typeof {{hookName}}>
