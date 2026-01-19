@@ -10,8 +10,7 @@ export const useUI = () => {
    */
   const [showRulesModal, setShowRulesModal] = useState<boolean>(false); 
   /**
-   * 临时保存选择队伍，为提交选择使用(1:left/2:right)
-   * TO-CHECK
+   * 临时保存选择队伍，为提交选择使用(1:left\2:right)
    */
   const [tempSelectTeam, setTempSelectTeam] = useState<number>(0); 
 

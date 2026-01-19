@@ -6,17 +6,15 @@ type Props = UseBaseReturn & UseDerivedReturn & UseUIReturn;
 
 export const useOptions = (props: Props) => {
   /**
-   * 打开选择模态框(1:left/2:right)
-   * TO-CHECK
+   * 打开选择模态框(1:left\2:right)
    */
-  function openSelectModal(team: 1 | 2) {
-    props.setTempSelectTeam(team);
+  function openSelectModal(teamId: number) {
+    props.setTempSelectTeam(teamId);
     props.setShowSelectModal(true);
   }
 
   /**
    * 关闭选择模态框
-   * TO-CHECK
    */
   function closeSelectModal() {
     props.setShowSelectModal(false);
@@ -25,11 +23,16 @@ export const useOptions = (props: Props) => {
 
   /**
    * 确认选择
-   * TO-CHECK
    */
   function comfirmSelect() {
-    // 确认选择后关闭模态框
-    props.setShowSelectModal(false);
+    if (!props.tempSelectTeam) return;
+    props.setTagId(props.tempSelectTeam);
+    props.setVoteList((prev: any[]) =>
+      prev.map((v) =>
+        v.tag_id === props.tempSelectTeam ? { ...v, num: (v.num || 0) + 1 } : v,
+      ),
+    );
+    closeSelectModal();
   }
 
   return {

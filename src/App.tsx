@@ -14,37 +14,37 @@ function App() {
   return (
     <div className="">
       <Row gutter={20} >
-        {/* TODO 左队是否被选择 bg-yellow-400 */}
-        <Col span={12} className='bg-blue-400 h-50 relative'>
+        {/* TO-CHECK 左队是否被选择 bg-yellow-400 */}
+        <Col span={12} className={`bg-blue-400 h-50 relative ${derived.isLeftSelected ? 'bg-yellow-400' : ''}`}>
           <Flex vertical>
-            {/* TODO 左队是否被选择 */}
-            <p>是否被选择：{ }</p>
-            {/* TODO 左队是否晋级 */}
-            <p>是否晋级：{ }</p>
-            {/* TODO 左队获取的投票数量*/}
-            <p>获得投票数量：{}</p>
-            {/* TODO 打开选择模态框 1 */}
-            {/* TODO 已投票不显示 */}
-            <Button>选择</Button>
+            {/* TO-CHECK 左队是否被选择 */}
+            <p>是否被选择：{derived.isLeftSelected ? '是' : '否'}</p>
+            {/* TO-CHECK 左队是否晋级 */}
+            <p>是否晋级：{derived.isLeftAdvanced ? '是' : '否'}</p>
+            {/* TO-CHECK 左队获取的投票数量*/}
+            <p>获得投票数量：{derived.leftVoteCount}</p>
+            {/* TO-CHECK 打开选择模态框 1 */}
+            {/* TO-CHECK 已投票不显示 */}
+            {!derived.isVoted && <Button onClick={() => options.openSelectModal(1)}>选择</Button>}
           </Flex>
         </Col>
-        {/* TODO 右队是否被选择 bg-yellow-400 */}
-        <Col span={12} className='bg-green-400 h-50 relative'>
+        {/* TO-CHECK 右队是否被选择 bg-yellow-400 */}
+        <Col span={12} className={`bg-green-400 h-50 relative ${derived.isRightSelected ? 'bg-yellow-400' : ''}`}>
           <Flex vertical>
-            {/* TODO 右队是否被选择 */}
-            <p>是否被选择：{ }</p>
-            {/* TODO 右队是否晋级 */}
-            <p>是否晋级：{ }</p>
-            {/* TODO 右队获取的投票数量*/}
-            <p>获得投票数量：{}</p>
-            {/* TODO 打开选择模态框 2 */}
-            {/* TODO 已投票不显示 */}
-            <Button>选择</Button>
+            {/* TO-CHECK 右队是否被选择 */}
+            <p>是否被选择：{derived.isRightSelected ? '是' : '否'}</p>
+            {/* TO-CHECK 右队是否晋级 */}
+            <p>是否晋级：{derived.isRightAdvanced ? '是' : '否'}</p>
+            {/* TO-CHECK 右队获取的投票数量*/}
+            <p>获得投票数量：{derived.rightVoteCount}</p>
+            {/* TO-CHECK 打开选择模态框 2 */}
+            {/* TO-CHECK 已投票不显示 */}
+            {!derived.isVoted && <Button onClick={() => options.openSelectModal(2)}>选择</Button>}
           </Flex>
         </Col>
       </Row>
-      {/* TODO 选择模态框 */}
-      <Modal title="确认选择模态框">
+      {/* TO-CHECK 选择模态框 */}
+      <Modal title="确认选择模态框" open={ui.showSelectModal} onCancel={options.closeSelectModal} onOk={options.comfirmSelect}>
         <p>内容</p>
       </Modal>
     </div>

@@ -27,9 +27,13 @@ export const useBase = () => {
 
   return {
     tagId,
+    setTagId,
     successTeam,
+    setSuccessTeam,
     hasPresentList,
+    setHasPresentList,
     voteList,
+    setVoteList,
   }
 }
 

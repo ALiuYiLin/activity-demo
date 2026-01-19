@@ -16,7 +16,7 @@ export const useBase = () => {
   /**
    * 投票数据数组
    */
-  const [voteList, setVoteList] = useState<any[]>([{"tag_id":1,"num":333},{"tag_id":2,"num":0}]); 
+  const [voteList, setVoteList] = useState<any[]>([{"tag_id":1,"num":0},{"tag_id":2,"num":0}]); 
 
   useEffect(()=>{
     async function init(){
@@ -27,9 +27,13 @@ export const useBase = () => {
 
   return {
     tagId,
+    setTagId,
     successTeam,
+    setSuccessTeam,
     hasPresentList,
+    setHasPresentList,
     voteList,
+    setVoteList,
   }
 }
 
