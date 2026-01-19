@@ -2,6 +2,9 @@
 {{{this}}};
 {{/each}}
 
+import { useMemo } from "react";
+
+
 {{#if hasProps}}
 type Props = {{{propsType}}};
 {{/if}}
@@ -12,7 +15,7 @@ export const {{hookName}} = ({{#if hasProps}}props: Props{{/if}}) => {
    * {{description}}
    * TODO: Implement derived {{name}}
    */
-  const {{name}} = () => {{{defaultValue}}};
+  const {{name}} = useMemo(() => {{{defaultValue}}},[]);
 {{/each}}
 
   return {

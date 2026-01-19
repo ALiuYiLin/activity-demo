@@ -2,12 +2,60 @@ import Handlebars from 'handlebars';
 import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { config } from './config';
-import { VarLayer } from './types';
+import { parse } from 'csv-parse/sync';
+import { Config, VarLayer } from './types';
 
 // Fix for __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// 从 CSV 文件读取配置
+const loadConfigFromCSV = (): Config[] => {
+  const csvPath = path.resolve(__dirname, './config.csv');
+  const csvContent = fs.readFileSync(csvPath, 'utf-8');
+  
+  const records = parse(csvContent, {
+    columns: true,
+    skip_empty_lines: true,
+  });
+
+  return records.map((row: any) => {
+    // 解析 defaultValue
+    let defaultValue: any = row.defaultValue;
+    if (row.type === 'number') {
+      defaultValue = Number(row.defaultValue) || 0;
+    } else if (row.type === 'boolean') {
+      defaultValue = row.defaultValue === 'true';
+    } else if (row.type === 'array') {
+      try {
+        // 处理数组格式，如 [] 或 [{tag_id:1,num:0}]
+        defaultValue = row.defaultValue ? eval(`(${row.defaultValue})`) : [];
+      } catch {
+        defaultValue = [];
+      }
+    } else if (row.type === 'function') {
+      defaultValue = undefined;
+    }
+
+    // 将 CSV 中的 layer 字符串映射到 VarLayer 枚举
+    const layerMap: Record<string, VarLayer> = {
+      'Meta': VarLayer.Meta,
+      'Derived': VarLayer.Derived,
+      'UI': VarLayer.UI,
+      'Option': VarLayer.Option,
+    };
+
+    return {
+      name: row.name,
+      desc: row.desc,
+      type: row.type,
+      defaultValue,
+      layer: layerMap[row.layer] || VarLayer.Meta,
+    } as Config;
+  });
+};
+
+const config = loadConfigFromCSV();
 
 const mapType = (type: string, defaultValue: any): string => {
   if (type === 'array') {
