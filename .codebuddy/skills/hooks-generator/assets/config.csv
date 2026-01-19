@@ -9,6 +9,8 @@ isRightSelected,右队是否被选择,boolean,false,Derived
 isLeftAdvanced,左队是否晋级,boolean,false,Derived
 isRightAdvanced,右队是否晋级,boolean,false,Derived
 isSelectedTeamAdvaced,是否是选择的队伍晋级了,boolean,false,Derived
+leftVoteCount,左队获取的投票数量,number,0,Derived
+rightVoteCount,右队获取的投票数量,number,0,Derived
 showSelectModal,是否显示确认选择模态框,boolean,false,UI
 showRulesModal,是否显示活动规则模态框,boolean,false,UI
 tempSelectTeam,临时保存选择队伍，为提交选择使用(1:left\2:right),number,0,UI

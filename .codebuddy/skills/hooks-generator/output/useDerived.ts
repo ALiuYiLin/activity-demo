@@ -37,6 +37,16 @@ export const useDerived = (props: Props) => {
    * TODO: Implement derived isSelectedTeamAdvaced
    */
   const isSelectedTeamAdvaced = useMemo(() => false,[]);
+  /**
+   * 左队获取的投票数量
+   * TODO: Implement derived leftVoteCount
+   */
+  const leftVoteCount = useMemo(() => 0,[]);
+  /**
+   * 右队获取的投票数量
+   * TODO: Implement derived rightVoteCount
+   */
+  const rightVoteCount = useMemo(() => 0,[]);
 
   return {
     isVoted,
@@ -45,6 +55,8 @@ export const useDerived = (props: Props) => {
     isLeftAdvanced,
     isRightAdvanced,
     isSelectedTeamAdvaced,
+    leftVoteCount,
+    rightVoteCount,
   }
 }
 

@@ -37,6 +37,16 @@ export const useDerived = (props: Props) => {
    * TO-CHECK
    */
   const isSelectedTeamAdvaced = useMemo(() => props.tagId !== 0 && props.tagId === props.successTeam, [props.tagId, props.successTeam]);
+  /**
+   * 左队获取的投票数量
+   * TO-CHECK
+   */
+  const leftVoteCount = useMemo(() => props.voteList.find((v: { tag_id: number }) => v.tag_id === 1)?.num ?? 0, [props.voteList]);
+  /**
+   * 右队获取的投票数量
+   * TO-CHECK
+   */
+  const rightVoteCount = useMemo(() => props.voteList.find((v: { tag_id: number }) => v.tag_id === 2)?.num ?? 0, [props.voteList]);
 
   return {
     isVoted,
@@ -45,6 +55,8 @@ export const useDerived = (props: Props) => {
     isLeftAdvanced,
     isRightAdvanced,
     isSelectedTeamAdvaced,
+    leftVoteCount,
+    rightVoteCount,
   }
 }
 

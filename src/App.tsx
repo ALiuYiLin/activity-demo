@@ -9,8 +9,8 @@ import { useUI } from './hooks/useUI'
 function App() {
   const base = useBase()
   const ui = useUI()
-  const derived = useDerived({...base, ...ui})
-  const options = useOptions({...base,...derived, ...ui})
+  const derived = useDerived({ ...base, ...ui })
+  const options = useOptions({ ...base, ...derived, ...ui })
 
   return (
     <div className="">
@@ -22,6 +22,8 @@ function App() {
             <p>是否被选择：{derived.isLeftSelected ? '是' : '否'}</p>
             {/* TO-CHECK 左队是否晋级 */}
             <p>是否晋级：{derived.isLeftAdvanced ? '是' : '否'}</p>
+            {/* TO-CHECK 左队获取的投票数量*/}
+            <p>获得投票数量：{derived.leftVoteCount}</p>
             {/* TO-CHECK 打开选择模态框 1 */}
             {/* TO-CHECK 已投票不显示 */}
             {!derived.isVoted && <Button onClick={() => options.openSelectModal(1)}>选择</Button>}
@@ -34,6 +36,8 @@ function App() {
             <p>是否被选择：{derived.isRightSelected ? '是' : '否'}</p>
             {/* TO-CHECK 右队是否晋级 */}
             <p>是否晋级：{derived.isRightAdvanced ? '是' : '否'}</p>
+             {/* TO-CHECK 右队获取的投票数量*/}
+            <p>获得投票数量：{derived.rightVoteCount}</p>
             {/* TO-CHECK 打开选择模态框 2 */}
             {/* TO-CHECK 已投票不显示 */}
             {!derived.isVoted && <Button onClick={() => options.openSelectModal(2)}>选择</Button>}
