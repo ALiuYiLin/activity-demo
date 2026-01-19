@@ -1,21 +1,21 @@
 ---
 name: hooks-generator
-description: 根据 CSV 配置文件自动生成 React Hooks 的 skill。当用户需要批量生成 hooks、根据配置生成状态管理代码、或需要将生成的 hooks 合并到 TSX 文件时触发此 skill。
+description: 根据 CSV 配置文件自动生成 React Hooks 并合并到项目中。当用户需要"生成 hooks"、"更新配置"、"根据 CSV 生成状态管理代码"时触发此 skill。
 ---
 
 # Hooks Generator
 
 ## 概述
 
-此 skill 用于根据 CSV 配置文件自动生成 React Hooks 代码，并支持将生成的 hooks 合并到目标 TSX 文件中。
+此 skill 用于根据 CSV 配置文件自动生成 React Hooks 代码，并将生成的 hooks 合并到项目的 `src/hooks/` 目录。
 
-## 执行步骤（必须按顺序执行）
+**注意**：此 skill 只负责 hooks 的生成和合并，不处理 TSX 文件中的 TODO 绑定。如需绑定视图，请使用 `hooks-binder` skill。
 
-**重要：调用此 skill 时，必须严格按以下步骤顺序执行，不可跳过任何步骤。**
+## 执行步骤
 
 ### 步骤 1：运行生成脚本
 
-首先执行生成脚本，将 hooks 生成到 `output/` 目录：
+执行生成脚本，将 hooks 生成到 `output/` 目录：
 
 ```bash
 cd <project_root>
@@ -103,14 +103,6 @@ function openSelectModal() {
 }
 ```
 
-### 步骤 4：处理 TSX 文件中的 TODO 注释
-
-扫描目标 TSX 文件，查找 `{/* TODO xxx */}` 格式的注释，根据 `assets/config.csv` 中的配置自动匹配并绑定 hooks。
-
-### 步骤 5：更新 TODO 状态
-
-完成绑定后，将 `TODO` 改为 `TO-CHECK`，等待人工确认。
-
 ---
 
 ## CSV 配置说明
@@ -171,81 +163,6 @@ export const MyComponent = () => {
   );
 };
 ```
-
-## TODO 注释自动绑定规则
-
-当在 TSX 文件中遇到 `{/* TODO xxx */}` 格式的注释时，自动匹配并绑定相应的 hooks 属性或方法。
-
-### 处理流程
-
-1. **识别 TODO 注释**：扫描 TSX 文件中的 `{/* TODO xxx */}` 注释
-2. **匹配 hooks 属性**：根据注释描述，从 `config.csv` 中查找匹配的变量
-   - 操作类（如"打开模态框"）→ 匹配 `Option` 层的函数
-   - 状态类（如"是否选中"）→ 匹配 `Derived` 或 `UI` 层的属性
-   - 数据类（如"队伍列表"）→ 匹配 `Meta` 层的数据
-3. **自动绑定**：将匹配的属性/方法绑定到对应的 JSX 元素
-4. **标记完成**：将 `TODO` 改为 `TO-CHECK`，等待人工检查
-
-### 注释状态说明
-
-| 注释格式 | 状态 | 说明 |
-|---------|------|------|
-| `{/* TODO xxx */}` | 待处理 | 需要自动匹配并绑定 hooks |
-| `{/* TO-CHECK xxx */}` | 待检查 | 已自动绑定，等待人工确认 |
-| 无注释 | 已完成 | 人工检查通过，已删除注释 |
-
-### 示例
-
-**处理前（TODO 状态）：**
-```tsx
-{/* TODO 打开选择队伍模态框 */}
-<Button type="primary">打开选择队伍模态框</Button>
-
-{/* TODO 显示左队是否被选中 isSelected */}
-<div className="team-status"></div>
-
-{/* TODO 显示背景 左队是否晋级 show */}
-<div className='bg'></div>
-```
-
-**处理后（TO-CHECK 状态）：**
-```tsx
-{/* TO-CHECK 打开选择队伍模态框 */}
-<Button type="primary" onClick={options.openSelectModal}>打开选择队伍模态框</Button>
-
-{/* TO-CHECK 显示左队是否被选中 isSelected */}
-<div className={classNames("team-status", { isSelected: derived.isLeftSelected })}></div>
-
-{/* TO-CHECK 显示背景 左队是否晋级 show */}
-<div className={classNames("bg", { show: derived.isLeftAdvanced })}></div>
-```
-
-**人工确认后（无 TODO 注释）：**
-```tsx
-<Button type="primary" onClick={options.openSelectModal}>打开选择队伍模态框</Button>
-
-<div className={classNames("team-status", { isSelected: derived.isLeftSelected })}></div>
-
-<div className={classNames("bg", { show: derived.isLeftAdvanced })}></div>
-```
-
-### 匹配规则
-
-根据 TODO 注释的关键词匹配 `config.csv` 中的变量：
-
-| 注释关键词 | 匹配字段 | 优先匹配层级 |
-|-----------|---------|-------------|
-| 打开/关闭/点击/操作 | `desc` 包含相关动作 | Option |
-| 是否/状态/选中/晋级 | `desc` 包含相关状态 | Derived > UI |
-| 列表/数据/数组 | `desc` 包含相关数据 | Meta |
-| 显示/隐藏/模态框 | `desc` 包含相关 UI | UI |
-
-### 跳过规则
-
-以下情况直接跳过，不做处理：
-- 没有 `TODO` 前缀的注释
-- 已经是 `TO-CHECK` 状态的注释
-- 元素已经绑定了相应属性（如已有 `onClick`）
 
 ## 模板说明
 
