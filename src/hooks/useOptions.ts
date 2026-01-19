@@ -1,6 +1,6 @@
-import { UseBaseReturn } from './useBase';
-import { UseDerivedReturn } from './useDerived';
-import { UseUIReturn } from './useUI';
+import type { UseBaseReturn } from './useBase';
+import type { UseDerivedReturn } from './useDerived';
+import type { UseUIReturn } from './useUI';
 
 type Props = UseBaseReturn & UseDerivedReturn & UseUIReturn;
 

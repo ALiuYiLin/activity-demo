@@ -1,5 +1,5 @@
-import { UseBaseReturn } from './useBase';
-import { UseUIReturn } from './useUI';
+import type { UseBaseReturn } from './useBase';
+import type { UseUIReturn } from './useUI';
 
 import { useMemo } from "react";
 
@@ -9,9 +9,8 @@ type Props = UseUIReturn & UseBaseReturn;
 export const useDerived = (props: Props) => {
   /**
    * 左队是否被选择
-   * TODO: Implement derived isLeftSelected
    */
-  const isLeftSelected = useMemo(() => 0,[]);
+  const isLeftSelected = useMemo(() => props.tagId === 1,[]);
   /**
    * 右队是否被选择
    * TODO: Implement derived isRightSelected

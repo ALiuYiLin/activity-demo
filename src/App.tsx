@@ -15,7 +15,15 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-8">
-      <Button type="primary">Primary</Button>
+      {/* TODO 打开选择队伍模态框 */}
+      <Button type="primary">open</Button>
+
+      {/* TODO 关闭选择队伍模态框 */}
+      <Button type="primary">close</Button>
+
+
+      {/* TODO 显示背景 左队是否晋级 show */}
+      <div className='bg'></div>
     </div>
   )
 }
