@@ -41,7 +41,7 @@ npx tsx ".codebuddy/skills/hooks-generator/scripts/generate-hooks.ts"
 3. **保留已有实现**：`src/hooks/` 中已存在的变量保持不变
 4. **TODO 状态处理**：
    - 生成的代码中带 `TODO` 注释的变量（如 `// TODO: Implement derived xxx`）
-   - 需要根据 `props` 参数实现具体逻辑
+   - 需要根据 `props` 参数，或已有派生变量（优先）实现具体逻辑
    - 实现完成后将 `TODO` 改为 `TO-CHECK`
 
 **合并示例：**
@@ -68,16 +68,27 @@ const isNewField = useMemo(() => props.someValue > 0, [props.someValue]);
 
 ### 步骤 3：实现带 TODO 的变量
 
-对于合并后仍带有 `TODO` 的变量，需要根据 `props` 参数实现具体逻辑：
+对于合并后仍带有 `TODO` 的变量，需要实现具体逻辑。
+
+**实现原则（按优先级）：**
+1. **优先复用已有派生属性**：如果当前变量的判断逻辑与已有派生属性相同，应直接使用该派生属性，避免重复判断
+2. **其次使用 props 参数**：如果没有可复用的派生属性，再使用 props 中的原始数据
 
 **Derived 层实现示例：**
 ```tsx
-// 生成的（待实现）
-const isLeftAdvanced = useMemo(() => false, []);  // TODO: Implement
+// ❌ 错误示例：重复判断 props.tagId !== 0
+const isVoted = useMemo(() => props.tagId !== 0, [props.tagId]);
+const isSelectedTeamAdvaced = useMemo(() => props.tagId !== 0 && props.tagId === props.successTeam, [...]);
 
-// 实现后（TO-CHECK）
-const isLeftAdvanced = useMemo(() => props.successTeam === 1, [props.successTeam]);  // TO-CHECK
+// ✅ 正确示例：复用已有的 isVoted 派生属性
+const isVoted = useMemo(() => props.tagId !== 0, [props.tagId]);
+const isSelectedTeamAdvaced = useMemo(() => isVoted && props.tagId === props.successTeam, [isVoted, props.tagId, props.successTeam]);
 ```
+
+**好处：**
+- 逻辑更清晰，减少重复代码
+- 当判断条件变化时，只需修改一处
+- 更易于理解变量之间的依赖关系
 
 **Option 层实现示例：**
 ```tsx
