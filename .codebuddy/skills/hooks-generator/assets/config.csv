@@ -12,3 +12,4 @@ showSelectModal,是否显示确认选择模态框,boolean,false,UI
 showRulesModal,是否显示活动规则模态框,boolean,false,UI
 openSelectModal,打开选择模态框,function,,Option
 closeSelectModal,关闭选择模态框,function,,Option
+comfirmSelect,确认选择,function,,Option
