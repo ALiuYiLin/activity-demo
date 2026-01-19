@@ -8,31 +8,38 @@ type Props = UseUIReturn & UseBaseReturn;
 
 export const useDerived = (props: Props) => {
   /**
-   * 左队是否被选择
+   * 是否投票（选择队伍）
+   * TO-CHECK
    */
-  const isLeftSelected = useMemo(() => props.tagId === 1,[]);
+  const isVoted = useMemo(() => props.tagId !== 0, [props.tagId]);
+  /**
+   * 左队是否被选择
+   * TO-CHECK
+   */
+  const isLeftSelected = useMemo(() => props.tagId === 1, [props.tagId]);
   /**
    * 右队是否被选择
-   * TODO: Implement derived isRightSelected
+   * TO-CHECK
    */
-  const isRightSelected = useMemo(() => false,[]);
+  const isRightSelected = useMemo(() => props.tagId === 2, [props.tagId]);
   /**
    * 左队是否晋级
-   * TODO: Implement derived isLeftAdvanced
+   * TO-CHECK
    */
-  const isLeftAdvanced = useMemo(() => false,[]);
+  const isLeftAdvanced = useMemo(() => props.successTeam === 1, [props.successTeam]);
   /**
    * 右队是否晋级
-   * TODO: Implement derived isRightAdvanced
+   * TO-CHECK
    */
-  const isRightAdvanced = useMemo(() => false,[]);
+  const isRightAdvanced = useMemo(() => props.successTeam === 2, [props.successTeam]);
   /**
    * 是否是选择的队伍晋级了
-   * TODO: Implement derived isSelectedTeamAdvaced
+   * TO-CHECK
    */
-  const isSelectedTeamAdvaced = useMemo(() => false,[]);
+  const isSelectedTeamAdvaced = useMemo(() => props.tagId !== 0 && props.tagId === props.successTeam, [props.tagId, props.successTeam]);
 
   return {
+    isVoted,
     isLeftSelected,
     isRightSelected,
     isLeftAdvanced,
