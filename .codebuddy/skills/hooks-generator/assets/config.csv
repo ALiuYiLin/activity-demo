@@ -17,3 +17,4 @@ tempSelectTeam,临时保存选择队伍，为提交选择使用(1:left\2:right),
 openSelectModal,打开选择模态框(1:left\2:right),function,,Option
 closeSelectModal,关闭选择模态框,function,,Option
 comfirmSelect,确认选择,function,,Option
+isMatchEnded,比赛是否结束（是否有队伍晋级）,boolean,false,Derived

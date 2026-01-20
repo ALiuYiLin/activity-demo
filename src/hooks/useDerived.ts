@@ -47,6 +47,11 @@ export const useDerived = (props: Props) => {
    * TO-CHECK
    */
   const rightVoteCount = useMemo(() => props.voteList.find((v: { tag_id: number }) => v.tag_id === 2)?.num ?? 0, [props.voteList]);
+  /**
+   * 比赛是否结束（是否有队伍晋级）
+   * TO-CHECK
+   */
+  const isMatchEnded = useMemo(() => props.successTeam !== 0, [props.successTeam]);
 
   return {
     isVoted,
@@ -57,6 +62,7 @@ export const useDerived = (props: Props) => {
     isSelectedTeamAdvaced,
     leftVoteCount,
     rightVoteCount,
+    isMatchEnded,
   }
 }
 
